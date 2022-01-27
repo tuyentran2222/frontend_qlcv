@@ -1,0 +1,33 @@
+[
+    {
+        "name" : "Dashboard",
+        "route": "/dashboard",
+        "icon": "bx bx-home"
+    },
+    {
+        "name" : "Lịch",
+        "route": "/calendar",
+        "icon": "bx bx-calendar"
+    },
+    {
+        "name" : "Dự án",
+        "route": "/projects",
+        "icon": "bx bx-cube-alt"
+    },
+    {
+        "name" : "Công việc được giao",
+        "route": "/tasks",
+        "icon": "bx bx-task"
+    },
+    {
+        "name" : "Công việc quá hạn",
+        "route": "/taskovertime",
+        "icon": "bx bx-task-x"
+    }
+    ,
+    {
+        "name" : "Cài đặt",
+        "route": "/settings",
+        "icon": "bx bx-cog"
+    }
+]

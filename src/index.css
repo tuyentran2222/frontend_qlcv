@@ -5,9 +5,83 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --font-family:'Cursive', 'Poppins', sans-serif;
+  font-family: var(--font-family) !important;
+  --background-color-item: #ffffff;
+  --background-color: #f5f7f8;
+  --footer-background-color: #18191a;
+  --footer-color: #C0DAC1;
+  --grey-color: #7a7a7b;
+  --white-color: #ffffff;
+  --primary-color-btn: #0093cf;
+  --danger-color: #FF0000;
+  --success-color: #00FF00;
+  --info--color: #0dcaf0;
+  --warning-color: #ffc107;
+  --dark-color: #212529;
+  --light-color: #f8f9fa;
+  --secondary-color: #0d6efd;
+  --border: 1px solid rgb(221, 221, 221);
+  --border-none: none;
+  --border-light: 1px solid var(--grey-color);
+  --border-dark: var(--border);
+  --hue: 174;
+  --sat: 63%;
+  --first-color: hsl(var(--hue), var(--sat), 40%);
+  --title-color: hsl(var(--hue), 12%, 15%);
+  --text-color: hsl(var(--hue), 8%, 35%);
+  --body-color: hsl(var(--hue), 100%, 99%);
+  --font-family: 'Cursive', 'Poppins', sans-serif;
+  --header-height: 3rem;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1.15rem;
+  --normal-font-size: .938rem;
+  --tiny-font-size: .625rem;
+  --font-size: 16px;
+  --button-font-size: 0.8rem;
+  --button-font-size-hover: 0.92rem;
+  --border-radius: 20px;
+  --z-tooltip: 10;
+  --z-fixed: 100;
+  --box-shadow-hover: 0 3px 10px rgb(31 31 31 / 16%), 0 3px 10px rgb(31 31 31 / 23%);
+  --box-shadow: 0 1px 6px rgb(31 31 31 / 12%), 0 1px 4px rgb(31 31 31 / 12%);  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.root {
+  font-family: var(--font-family) !important;
+}
+/* .filter {
+  width: 25% !important;
+} */
+.filter-table {
+  border: var(--border);
+}
+
+.form-control:focus {
+  box-shadow: var(--box-shadow-hover) !important;
+  border: var(--border-dark) !important;
+}
+
+.input-form {
+  padding: 10px 5px;
+}
+
+.input-inline-left {
+  padding: 0px 10px 0px 0px;
+}
+
+.input-inline-right {
+  padding: 0px 0px 0px 10px;
+}
+.comment-container {
+  width: 80%;
+  margin: auto;
+}
+.ant-input-number {
+  width: 100% !important;
 }
