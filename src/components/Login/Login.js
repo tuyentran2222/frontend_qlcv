@@ -48,7 +48,7 @@ const Login = () => {
             else {
                 setErrors({"emailError": "" , "passwordError": ""});
                 const user = { 'email' :dataForm.email, 'password' : dataForm.password };
-                axios.post('https://qlvcbackend.herokuapp.com/api/users/login', user).then((response) => {
+                axios.post('/api/users/login', user).then((response) => {
                     if (response.data.code === 200) {
                         axios.defaults.headers.common['Authorization'] = "Bearer " + response.data.data.token;
                         localStorage.setItem('token',response.data.data.token);

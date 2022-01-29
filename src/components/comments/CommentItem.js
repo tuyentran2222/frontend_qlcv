@@ -78,7 +78,7 @@ export default function CommentItem(props) {
     const onUpdateComment = (e) => {
         e.preventDefault();
         const updatedComment = {'comment': comment};
-        axios.patch(`/api/comments/update/${comment_id}/`, updatedComment).then(res=>{
+        axios.post(`/api/comments/update/${comment_id}/`, updatedComment).then(res=>{
             console.log(res)
             if(res.data.code === 200)
             {
@@ -134,7 +134,7 @@ export default function CommentItem(props) {
             <Comment
                 // actions={actions}
                 author={name}
-                avatar={ <Avatar src={<Image src={`https://qlvcbackend.herokuapp.com${avatar}`} />} />}
+                avatar={ <Avatar src={<Image src={`http://localhost:8000${avatar}`} />} />}
                 content={
                     <div className="row" >
                         <p className='col-11'>
