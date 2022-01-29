@@ -76,7 +76,7 @@ const User = () => {
                     <div className="col-md-3 border-right">
                         <div className="d-flex flex-column align-items-center text-center p-3 py-5">
                             <ImgPrev></ImgPrev>
-                            {/* <img style={{maxWidth:'100%'}} className="rounded-circle mt-5" src={`http://localhost:8000${user.avatar}`} alt='Ảnh đại diện'/> */}
+                            {/* <img style={{maxWidth:'100%'}} className="rounded-circle mt-5" src={`https://qlvcbackend.herokuapp.com/${user.avatar}`} alt='Ảnh đại diện'/> */}
                             <span className="font-weight-bold">{username}</span>
                             <span className="text-black-50">{email}</span><span> </span></div>
                     </div>
