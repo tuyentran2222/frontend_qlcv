@@ -40,7 +40,7 @@ const User = () => {
         _formData.append("gender", values.gender );
         _formData.append("firstname",values.firstname);
         _formData.append("lastname",values.lastname);
-        axios.post(`/api/user/update/`, _formData).then(res=> {
+        axios.post(`/api/user/update`, _formData).then(res=> {
             if (res.data.code === 200) {
                 console.log(res.data.data);
                 setUser(JSON.stringify(res.data.data))

@@ -92,7 +92,6 @@ export default function CommentItem(props) {
     if (editable) return (
         <div className="media mb-3 row">
             <div className="col-1">
-                <Avatar src={<Image src={`http://localhost:8000${avatar}`} />} />
             </div>
             <div className="media-body p-2 shadow-sm rounded bg-light border col-11">
                 <div className="row">
@@ -135,7 +134,7 @@ export default function CommentItem(props) {
             <Comment
                 // actions={actions}
                 author={name}
-                avatar={ <Avatar src={<Image src={`http://localhost:8000${avatar}`} />} />}
+                avatar={ <Avatar src={<Image src={`https://qlvcbackend.herokuapp.com${avatar}`} />} />}
                 content={
                     <div className="row" >
                         <p className='col-11'>
