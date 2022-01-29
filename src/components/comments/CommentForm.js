@@ -16,7 +16,7 @@ const CommentForm = (props) => {
     const onSubmit = (e) => {
         e.preventDefault();
         const newComment = {'comment': comment};
-        axios.post(`/api/tasks/${props.taskId}/comment/add/`, newComment).then(res=>{
+        axios.post(`/api/tasks/${props.taskId}/comment/add`, newComment).then(res=>{
             console.log(res)
             if(res.data.code === 200)
             {
