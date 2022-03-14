@@ -23,7 +23,7 @@ function ViewProject(props) {
   const { id } = useParams();
   useEffect(() => {
       const projectId = id;
-      axios.get(`http://127.0.0.1:8000/api/projects/edit/${projectId}`,config).then( res => {
+      axios.get(`https://qlvcbackend.herokuapp.com/api/projects/edit/${projectId}`,config).then( res => {
         if(res.data.code === 200)
         {
           setProject(res.data.project);
@@ -44,7 +44,7 @@ function ViewProject(props) {
     
     const onSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://127.0.0.1:8000/api/projects/update/${id}`, project,config).then(res=>{
+        axios.put(`https://qlvcbackend.herokuapp.com/api/projects/update/${id}`, project,config).then(res=>{
           
             if(res.data.code === 200)
             {

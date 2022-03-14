@@ -59,7 +59,7 @@ const EditProject1 = () => {
         data = {...values, projectStart, projectEnd};
         console.log(data)
         const projectId = id;
-        axios.patch(`http://127.0.0.1:8000/api/projects/update/${projectId}`, data).then( res => {
+        axios.patch(`https://qlvcbackend.herokuapp.com/api/projects/update/${projectId}`, data).then( res => {
             console.log(res);
             if(res.data.code === 200)
             {

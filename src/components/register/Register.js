@@ -58,7 +58,7 @@ const Register = () => {
             _formData.append("firstname",dataForm.firstname);
             _formData.append("lastname",dataForm.lastname);
             console.log(dataForm);
-            axios.post('http://127.0.0.1:8000/api/users/register', _formData)
+            axios.post('https://qlvcbackend.herokuapp.com/api/users/register', _formData)
                 .then(response =>{
                     console.log(response);
                     if(response.data.code === 200) message.success(response.data.message);

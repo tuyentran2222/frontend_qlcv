@@ -99,7 +99,7 @@ const AddTask = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/members/memberInfo/${project_id}`,config).then( res => {
+    axios.get(`https://qlvcbackend.herokuapp.com/api/members/memberInfo/${project_id}`,config).then( res => {
       if(res.data.code === 200)
       {
         console.log(res.data.data)

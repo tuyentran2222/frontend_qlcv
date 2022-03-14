@@ -148,7 +148,7 @@ function EditTask(props) {
     }
     useEffect(() => {
         const taskId = id;
-        axios.get(`http://127.0.0.1:8000/api/members/memberInfo/${projectId}`,config).then( res => {
+        axios.get(`https://qlvcbackend.herokuapp.com/api/members/memberInfo/${projectId}`,config).then( res => {
           if(res.data.code === 200)
           {
              console.log(res.data.data)
@@ -161,7 +161,7 @@ function EditTask(props) {
           }
           
         });
-        axios.get(`http://127.0.0.1:8000/api/tasks/edit/${taskId}`,config).then( res => {
+        axios.get(`https://qlvcbackend.herokuapp.com/api/tasks/edit/${taskId}`,config).then( res => {
           if(res.data.code === 200)
           {
               setTask(res.data.data);
@@ -203,7 +203,7 @@ function EditTask(props) {
     const onSubmit = (e) => {
       console.log(task)
         e.preventDefault();
-        axios.patch(`http://127.0.0.1:8000/api/tasks/update/${id}`, task,config).then(res=>{
+        axios.patch(`https://qlvcbackend.herokuapp.com/api/tasks/update/${id}`, task,config).then(res=>{
           
             if(res.data.code === 200)
             {
