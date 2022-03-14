@@ -35,19 +35,19 @@ const TopNav = ($props)=> {
     });
 
     const [avatar, setAvatar] = useContext(AppContext).avatar;
-
+    
     useEffect(() => {
         axios.get("/api/getUser").then(res=> {
             if (res.data.code === 200) {
                 setUser(res.data.data);
-                setAvatar(`https://qlvcbackend.herokuapp.com/${res.data.data.avatar}`);
+                setAvatar(` http://localhost:8000${res.data.data.avatar}`);
             }
         })
     }, []);
 
     const curr_user = {
         name: user.username,
-        image_url: `https://qlvcbackend.herokuapp.com/${user.avatar}`
+        image_url: `${avatar}`
     }
 
     return (

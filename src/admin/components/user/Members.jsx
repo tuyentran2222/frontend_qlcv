@@ -1,29 +1,32 @@
 import {React, useContext, useEffect, useState} from 'react'
 import axios from "axios";
-import Table from '../table/Table'
+import Table from '../../../components/table/Table'
 import {useNavigate, useParams } from "react-router-dom";
 import 'boxicons';
-import { AppContext } from '../context/Context';
-import Spinner from '../spinner/Spinner';
+import Genders from '../../../assets/json/gender.json'
+import Spinner from '../../../components/spinner/Spinner';
 import { message, Popconfirm, Button, Form, Input,Select, Row, Col } from 'antd';
 import {DeleteOutlined} from '@ant-design/icons';
-
+import Card from '../../../components/card/Card'
+import CreateAccount from '../account/CreateAccount';
 const { Option } = Select;
 
 const projectTableHead = [
     ['STT', 'id', false, 'number'],
-    ['Tên thành viên', 'username', true, 'string'],
+    ['Username', 'username', true, 'string'],
     ['Email', 'email', true, 'string'],
-    ['Vai trò', 'role', false, 'string'],
+    ['Giới tính', 'gender', false, 'string'],
+    ['Ngày tạo', 'created_at', 'date'],
     ['Action', 'action', false, 'none']
 ]
 
 const renderHead = (item, index) => <th key={index}>{item}</th>
 
-const Member = () => {
+const Members = () => {
     const navigate = useNavigate();
     const {projectId} = useParams('id');
-    const [members, setMembers] = useContext(AppContext).members;
+    const [countLastUserCreate, setCountLastUserCreate] = useState(0);
+    const [members, setMembers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [toggle, setToggle] = useState(false);
     
@@ -32,12 +35,15 @@ const Member = () => {
             <td>{++index}</td>
             <td>{item.username}</td>
             <td>{item.email}</td>
-            <td>{item.role}</td>
+            <td>{Genders.filter(gender=>gender.value === item.gender)[0].label}</td>
+            {console.log(Genders)}
+            <td>{item.created_at}</td>
             <td>
+                <CreateAccount user={item} />
                 <Popconfirm
                     placement="topRight"
                     title="Bạn có chắc chắn muốn thành viên này?"
-                    onConfirm={()=>confirmDeleteMember(parseInt(projectId), item.id)}
+                    onConfirm={()=>confirmDeleteMember(parseInt(item.projectId), item.id)}
                     okText="Có"
                     cancelText="Không"
                 >
@@ -48,7 +54,7 @@ const Member = () => {
     );
 
     const confirmDeleteMember = async (projectId,id) => {
-        axios.delete(`/api/members/${projectId}/delete/${id}`).then((response) => {
+        axios.delete(`/api/users/delete/${id}`).then((response) => {
             if (response.data.code === 200) {
                 setMembers(members.filter(member => member.id !== id))
                 message.success(response.data.message);
@@ -65,7 +71,7 @@ const Member = () => {
         axios.post(`/api/members/add/${projectId}`, data).then(res=>{
             console.log(res);
             if(res.data.code === 200)
-            {   
+            {  
                 message.success(res.data.message);
                 setMembers([...members,res.data.data]);
                 setLoading(false);
@@ -82,80 +88,25 @@ const Member = () => {
     };
 
     useEffect(() => {
-        console.log(` http://localhost:8000/api/members/${projectId}`);
-        axios.get(`/api/members/${projectId}`).then(res=> {
+        console.log(`http://localhost:8000/api/users`);
+        axios.get(`/api/users`).then(res=> {
             console.log(res);
             if (res.data.code === 200) {
-                setMembers(res.data.data.data);
+                setMembers(res.data.data);
+                const now = new Date();
+                const month = now.getMonth();
+                console.log(month);
+                const numberOfUserCreateInMonth = res.data.data.filter(item => (new Date(item.created_at)).getMonth() === month).length;
+                setCountLastUserCreate(numberOfUserCreateInMonth);
                 setLoading(false);
             }
             else {
+                navigate('/login');
                 console.log(res.data.message);
             }
         })
         // .catch(error=>navigate('/login'))
     },[projectId, navigate, setMembers]);
-    
-    const formAdd = 
-        <Form layout="vertical"
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 24 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
-        >
-            <Row>
-                <Col span={12}>
-                    <Form.Item
-                        placeholder = 'Nhập email'
-                        label="Nhập email của thành viên"
-                        name="email"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Vui lòng nhập email của thành viên!',
-                            },
-                        ]}
-                        
-                    >
-                        <Input size="large"/>
-                    </Form.Item>
-                </Col>
-                <Col span={12}>
-                    <Form.Item name="role" label="Vai trò">
-                        <Select
-                            placeholder="Chọn vai trò"
-                            allowClear
-                            size="large"
-                        >
-                            <Option value="1">Member</Option>s
-                            <Option value="2">Developer</Option>
-                            <Option value="3">Maintenance</Option>
-                            <Option value="4">Customer Support</Option>
-                            <Option value="5">BA</Option>
-                            <Option value="6">Leader</Option>
-                            <Option value="7">Project Management</Option>
-                        </Select>
-                    </Form.Item>
-                </Col>
-            </Row>
-            <Form.Item
-                wrapperCol={{
-                    offset: 0,
-                    span: 16,
-                }}
-            >
-                <Button type="primary" htmlType="submit" size="large">
-                    Thêm    
-                </Button>
-            </Form.Item>
-        </Form>;
-
-    const toggleButton = (e) => {
-        toggle ? setToggle(false): setToggle(true);
-    }
     
     if (loading) {
         return <Spinner/>
@@ -163,8 +114,11 @@ const Member = () => {
     else
     return (
         <div>
-            <Button className="btn btn-primary btn-block mb-4" onClick={e => toggleButton()}>{toggle ? "Ẩn thêm thành viên": "Thêm thành viên"}</Button>       
-                {toggle ? formAdd : ''}
+            <div className='row'>
+                <Card count={members.length} title="Số người dùng" icon="bx bxs-user-account"/>
+                <Card count={countLastUserCreate} title="Tạo mới trong tháng" icon="bx bx-diamond"/>
+            </div> 
+            <CreateAccount create="false" title="Thêm người dùng"/>
                 <div className="row">
                     <div className="col-12">
                         <div className="card">
@@ -184,4 +138,4 @@ const Member = () => {
     )
 }
 
-export default Member;
+export default Members;

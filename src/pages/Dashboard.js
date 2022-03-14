@@ -11,19 +11,30 @@ const Dashboard = () => {
     const [countAssignedTasks, setCountAssignedTasks] = useState(0);
     const [countCreateTasks, setCountCreateTasks] = useState(0);
     const [onLoading, setOnLoading] = useState(true);
-    
-    const chartOptions = {
+    const [status, setStatus]= useState([0,0,0,0]);
+    const [status1, setStatus1]= useState([0,0]);
+    const chartOptions1 = {
         options :{
-            labels : ["Mới", "Hoàn thành", "Quá hạn", "Chưa giao", "Đang thực hiện"]
+            labels : ["Mới", "Đang thực hiện", "Đã hoàn thành", "Quá hạn"]
         },
-        series: [10,25,3,22,12],
+        series: status,
         
     }
+
+    const chartOptions2 = {
+        options :{
+            labels : ["Số dự án tạo", "Số dự án không phải do mình tạo"]
+        },
+        series: status1
+        
+    }
+
     useEffect(()=>{
-        axios.get(`/api/count/projects`).then(res=>{
+        axios.get(`/api/status/projects`).then(res=>{
             if(res.data.code === 200)
-            {  
-                setCountProjects(res.data.data);
+            {
+                setStatus(res.data.data[0]);
+                setStatus1(res.data.data[1]);
             }
             else if(res.data.code > 200)
             {
@@ -31,11 +42,12 @@ const Dashboard = () => {
             }
            
         });
-        axios.get(`api/tasks/getCount`).then(res=>{
+        axios.get(`/api/count/projects`).then(res=>{
             if(res.data.code === 200)
-            {  
-                setCountAssignedTasks(res.data.countAssigned);
-                setCountCreateTasks(res.data.countCreate)
+            {
+                setCountProjects(res.data.data.countProjects);
+                setCountAssignedTasks(res.data.data.countAssigned);
+                setCountCreateTasks(res.data.data.countCreate);
                 setOnLoading(false);
             }
             else if(res.data.code > 200)
@@ -44,30 +56,26 @@ const Dashboard = () => {
             }
            
         });
-    });
+    },[]);
 
     if (onLoading) return <Spinner/>;
     return (
         <>
+        {console.log(status)}
             <div className='row' style={{marginTop:'30px'}}>
-                <div className='col-3'>
                     <Card count={countProjects} title="Tổng số dự án" icon='bx bxl-product-hunt'></Card>
-                </div>
-                <div className='col-3'>
                     <Card count={countAssignedTasks} title="Công việc được giao" icon='bx bx-task'></Card>
-                </div>
-                <div className='col-3'>
                     <Card count={countCreateTasks} title="Công việc đã tạo" icon='bx bx-task'></Card>
-                </div>
+
             </div>
             <div className='row'>
                 <div className="col-md-6 col-sm-12" style={{margin:'auto 0'}}>
-                    <Chart options={chartOptions.options} series={chartOptions.series} labels={chartOptions.labels} type="pie" width="450" ></Chart>
-                    <div className="text-center">Công việc tạo</div>
+                    <Chart options={chartOptions1.options} series={chartOptions1.series} labels={chartOptions1.labels} type="pie" width="450" ></Chart>
+                    <div className="text-center">Dự án</div>
                 </div>
                 <div className="col-md-6 col-sm-12" style={{margin:'auto 0'}}>
-                    <Chart options={chartOptions.options} series={chartOptions.series} labels={chartOptions.labels} type="pie" width="450" ></Chart>
-                    <div className="text-center">Công việc mình được giao</div>
+                    <Chart options={chartOptions2.options} series={chartOptions2.series} labels={chartOptions2.labels} type="pie" width="550" ></Chart>
+                    <div className="text-center">Dự án</div>
                 </div>
             </div>
         </>

@@ -25,6 +25,7 @@ const AddProject = () => {
         const projectEnd = rangeTimeValue[1].format('YYYY-MM-DD');
         
         data = {...values, projectStart, projectEnd};
+        data.status = parseInt(data.status);
         console.log(data)
         axios.post('/api/create', data).then(res => {
             console.log(res);
@@ -96,15 +97,14 @@ const AddProject = () => {
                     </Form.Item>
                     <Form.Item name="status" label="Trạng thái" rules={[{ required: true, message: "Vui lòng chọn trạng thái" }]}>
                         <Select
-                            placeholder="Chọn trạng thái của công việc"
+                            placeholder="Chọn trạng thái của dự án"
                             allowClear
                             size="large"
                         >
                             <Option value="1">Mới</Option>
                             <Option value="2">Đang thực hiện</Option>
-                            <Option value="3">Đã thực hiện</Option>
-                            <Option value="4">Hoàn thành</Option>
-                            <Option value="5">Quá hạn</Option>
+                            <Option value="3">Hoàn thành</Option>
+                            <Option value="4">Quá hạn</Option>
                         </Select>
                     </Form.Item>
 

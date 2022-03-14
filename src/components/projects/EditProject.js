@@ -50,7 +50,9 @@ const EditProject1 = () => {
 
     const onFinish = (values) => {
         let data =values;
-        const rangeTimeValue = values['range-picker'];
+        let rangeTimeValue = values['range-picker'];
+        if (rangeTimeValue== null) rangeTimeValue= [moment(project.projectStart, dateFormat), moment(project.projectEnd, dateFormat)];
+        if (data.status==null) data.status =project.status;
         const projectStart = rangeTimeValue[0].format('YYYY-MM-DD');
         const projectEnd = rangeTimeValue[1].format('YYYY-MM-DD');
         

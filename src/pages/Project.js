@@ -8,10 +8,6 @@ import Spinner from '../components/spinner/Spinner';
 import {FilterOutlined,DeleteOutlined, UserOutlined, MenuFoldOutlined, EditOutlined, PlusSquareOutlined, ReloadOutlined}  from '@ant-design/icons';
 import { Button, Popconfirm, message} from 'antd';
 
-const status = [
-    'Chọn trạng thái','Mới', "Đang thực hiện", "Đã thực hiện", "Hoàn thành"
-]
-
 const projectTableHead = [
     ['STT', 'id', false, 'number'],
     ['Tên dự án', 'projectName', true, 'string'],
@@ -24,59 +20,6 @@ const projectTableHead = [
 ];
 
 const renderHead = (item, index) => <th key={index}>{item}</th>
-
-const renderBody = (item, index) => (
-    <tr key={index}>
-        <td>{index+1}</td>
-        <td>{item.projectName}</td>
-        <td>{item.projectCode}</td>
-        <td>{item.projectStart}</td>
-        <td>{status[item.status]}</td>
-        <td>{item.partner}</td>
-        <td>{item.role}</td>
-        <td>
-            {
-                item.role !== "Owner"? '' :
-                <Link to={`/projects/edit/${item.id}`}>
-                    <Button type='text' icon={<EditOutlined />}></Button>
-                </Link>
-            }
-            {
-                item.role !== "Owner" ? '' : 
-                <Popconfirm
-                icon={<DeleteOutlined/>}
-                    placement="topRight"
-                    title="Bạn có chắc chắn muốn xóa dự án này?"
-                    onConfirm={()=>confirmDeleteProject(item.id)}
-                    okText="Yes"
-                    cancelText="No"
-                >
-                    <Button type='text'><DeleteOutlined size='small'/></Button>
-                </Popconfirm>
-            }
-          
-            <Link to={`/members/${item.id}`}>
-                <Button type='text' icon={<UserOutlined />} ></Button>
-            </Link>
-            
-            <Link to={`/project/${item.id}/tasks/`}>
-                <Button type='text' icon={<MenuFoldOutlined/>}></Button>
-            </Link>
-            
-        </td>
-    </tr>
-);
-
-const confirmDeleteProject = async id => {
-    axios.delete(`/api/projects/delete/${id}`).then((response) => {
-        if (response.data.code === 200) {
-            message.success(response.data.message);
-        }
-        else {
-            message.error(response.data.message);
-        }
-    })
-};
 
 const Project = () => {
     const navigate = useNavigate();
@@ -91,10 +34,67 @@ const Project = () => {
         projectStart: "",
         projectEnd: ""
     });
+    const status1 = [
+        'Chọn trạng thái','Mới', "Đang thực hiện", "Đã thực hiện", "Hoàn thành"
+    ];
     const { projectName, projectCode, partner, status, projectStart, projectEnd } = project;
     const onInputChange = e => {
         setProject({ ...project, [e.target.name]: e.target.value });
     };
+
+    const confirmDeleteProject = async id => {
+        axios.delete(`/api/projects/delete/${id}`).then((response) => {
+            if (response.data.code === 200) {
+                message.success(response.data.message);
+                setProjects(projects.filter(project=>project.id !== id));
+            }
+            else {
+                message.error(response.data.message);
+            }
+        })
+    };
+    
+    const renderBody = (item, index) => (
+        <tr key={index}>
+            <td>{index+1}</td>
+            <td>{item.projectName}</td>
+            <td>{item.projectCode}</td>
+            <td>{item.projectStart}</td>
+            <td>{status1[item.status]}</td>
+            <td>{item.partner}</td>
+            <td>{item.role}</td>
+            <td>
+                {
+                    item.role !== "Owner"? '' :
+                    <Link to={`/projects/edit/${item.id}`}>
+                        <Button type='text' icon={<EditOutlined />}></Button>
+                    </Link>
+                }
+                {
+                    item.role !== "Owner" ? '' : 
+                    <Popconfirm
+                    icon={<DeleteOutlined/>}
+                        placement="topRight"
+                        title="Bạn có chắc chắn muốn xóa dự án này?"
+                        onConfirm={()=>confirmDeleteProject(item.id)}
+                        okText="Có"
+                        cancelText="Không"
+                    >
+                        <Button type='text'><DeleteOutlined size='small'/></Button>
+                    </Popconfirm>
+                }
+              
+                <Link to={`/members/${item.id}`}>
+                    <Button type='text' icon={<UserOutlined />} ></Button>
+                </Link>
+                
+                <Link to={`/project/${item.id}/tasks/`}>
+                    <Button type='text' icon={<MenuFoldOutlined/>}></Button>
+                </Link>
+                
+            </td>
+        </tr>
+    );
 
     const onRefresh = (e) => {
         e.preventDefault();
@@ -108,6 +108,7 @@ const Project = () => {
             projectEnd: ""
         });
     }
+    
 
     const onFilter =  e => {
         e.preventDefault();

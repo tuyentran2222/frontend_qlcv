@@ -47,11 +47,10 @@ const renderBody = (item, index) => (
         <td><span>{status[item.status+1]}</span></td>
         <td>{item.levelCompletion}</td>
         <td>{priority[item.priority]}</td>
-        
         <td style={{display:'flex', flexDirection:'row'}}>
-            {item.role === "Thành viên"?'' :<Link className="btn mr-2" to={`/tasks/edit/${item.id}`}>
+            {item.role === "Thành viên"?'' :<a className="btn mr-2" href={`/project/${item.projectId}/task/edit/${item.id}`}>
                 <EditOutlined />
-            </Link>
+            </a>
             }
             {item.role === "Thành viên"?'' :
             <Popconfirm
@@ -116,7 +115,7 @@ function EditTask(props) {
         const taskPersonIds = values.taskPersonId.join(",");
         data = {...values, taskStart, taskEnd, taskPersonIds};
         console.log(data);
-        axios.patch(`/api/tasks/update/${id}`, data).then(res=>{
+        axios.post(`/api/tasks/update/${id}`, data).then(res=>{
           
             if(res.data.code === 200)
             {
@@ -196,7 +195,6 @@ function EditTask(props) {
         axios.get("/api/getAllProjects").then(res=> {
             if (res.data.code === 200) {
                 setProjectNames(res.data.data);
-                setLoading(false);
             }
             if (res.data.code === 500) {
                 navigate('/login');
@@ -205,7 +203,6 @@ function EditTask(props) {
             axios.get(`/api/members/${projectId}`).then(res=> {
                 if (res.data.code === 200) {
                     setMembers(res.data.data.data);
-                    setLoading(false);
                 }
                 else {
                     message.error("Đã có lỗi xảy ra");
@@ -372,7 +369,7 @@ function EditTask(props) {
                                 span: 16,
                             }}
                         >
-                            <Button type="danger" htmlType="button" size="large">
+                            <Button type="danger" htmlType="button" size="large" >
                                 Hủy
                             </Button>
                         </Form.Item>

@@ -55,6 +55,8 @@ const Login = () => {
                         localStorage.setItem('user', JSON.stringify(response.data.data.user));  
                         message.success('Đăng nhập thành công');
                         setUser(response.data.data);
+                        if (response.data.data.user.is_admin ===1) navigate('/admin/users')
+                        else
                         navigate('/dashboard');
                     }
                     else {

@@ -79,7 +79,7 @@ const deleteTask = async id => {
       
           case "catch":
           {
-              axios.delete(`https://qlvcbackend.herokuapp.com//api/tasks/delete/${id}`,config).then((response) => {
+              axios.delete(` http://localhost:8000//api/tasks/delete/${id}`,config).then((response) => {
                   if (response.data.code === 200) {
                       swal("Success",response.data.message,"success");
                       // const navigate = useNavigate();
@@ -129,7 +129,7 @@ function EditTask(props) {
       setTask({ ...task, [e.target.name]: e.target.value });
       
       if (e.target.name === 'projectCode') {
-        axios.get(`https://qlvcbackend.herokuapp.com//api/members/${e.target.value}`, config).then(res=> {
+        axios.get(` http://localhost:8000//api/members/${e.target.value}`, config).then(res=> {
           if (res.data.code === 200) {
               setMembers(res.data.data);
           }
@@ -177,7 +177,7 @@ function EditTask(props) {
           
         });
 
-        axios.get("https://qlvcbackend.herokuapp.com//api/getAllProjects", config).then(res=> {
+        axios.get(" http://localhost:8000//api/getAllProjects", config).then(res=> {
         if (res.data.code === 200) {
             setProjectNames(res.data.data);
             setLoading(false);
@@ -186,7 +186,7 @@ function EditTask(props) {
             navigate('/login');
         }
         
-        axios.get(`https://qlvcbackend.herokuapp.com//api/members/${projectCode}`, config).then(res=> {
+        axios.get(` http://localhost:8000//api/members/${projectCode}`, config).then(res=> {
           console.log(projectCode)
           if (res.data.code === 200) {
               setMembers(res.data.data);

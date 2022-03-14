@@ -27,7 +27,7 @@ const AddProject = () => {
 
   const onSubmit = async e => {
     e.preventDefault();console.log(project);
-    axios.post('https://qlvcbackend.herokuapp.com//api/create', project, config).then(res => {
+    axios.post(' http://localhost:8000//api/create', project, config).then(res => {
       console.log(res);
       if(res.data.code === 200)
       {

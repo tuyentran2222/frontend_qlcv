@@ -78,7 +78,7 @@ export default function CommentItem(props) {
     const onUpdateComment = (e) => {
         e.preventDefault();
         const updatedComment = {'comment': comment};
-        axios.post(`/api/comments/update/${comment_id}/`, updatedComment).then(res=>{
+        axios.post(`/api/comments/update/${comment_id}`, updatedComment).then(res=>{
             console.log(res)
             if(res.data.code === 200)
             {
@@ -92,6 +92,7 @@ export default function CommentItem(props) {
     if (editable) return (
         <div className="media mb-3 row">
             <div className="col-1">
+                <Avatar class="ant-image-img" src={` http://localhost:8000${avatar}`} alt="Avatar" style={{border:"50% 50%"}}></Avatar>
             </div>
             <div className="media-body p-2 shadow-sm rounded bg-light border col-11">
                 <div className="row">
@@ -134,7 +135,7 @@ export default function CommentItem(props) {
             <Comment
                 // actions={actions}
                 author={name}
-                avatar={ <Avatar src={<Image src={`https://qlvcbackend.herokuapp.com/${avatar}`} />} />}
+                avatar={ <Avatar src={<Image src={` http://localhost:8000${avatar}`} />} />}
                 content={
                     <div className="row" >
                         <p className='col-11'>
@@ -155,7 +156,7 @@ export default function CommentItem(props) {
                 }
             />    
             {/* <div className="col-1">
-                <Avatar src={<Image src={`https://qlvcbackend.herokuapp.com/${avatar}`} />} />
+                <Avatar src={<Image src={` http://localhost:8000/${avatar}`} />} />
             </div>
             <div className="media-body p-2 shadow-sm rounded bg-light border col-11">
                 <div className="row">

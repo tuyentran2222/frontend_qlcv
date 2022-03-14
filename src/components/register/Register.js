@@ -103,7 +103,7 @@ const Register = () => {
                 </div>
                 <div class="col-md-6">
                     <label for="confirm_password" class="form-label">Nhập lại mật khẩu</label>
-                    <input type="confirm_password" class="form-control" id="confirm_password" onChange={(e)=>setDataForm({...dataForm,"confirm_password":e.target.value})} name="confirm_password" required/>
+                    <input type="password" class="form-control" id="confirm_password" onChange={(e)=>setDataForm({...dataForm,"confirm_password":e.target.value})} name="confirm_password" required/>
                     <div class="valid-feedback"></div>
                 </div>
                 <div class="col-md-6">

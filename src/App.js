@@ -25,6 +25,9 @@ import PrivateOutlet from './components/router/PrivateOutlet';
 import PrivateRoute from './components/router/PrivateRoute';
 import PicturesWall from './components/member/PicturesWall';
 
+import Members from './admin/components/user/Members';
+
+import PageLayout from './admin/components/layout/PageLayout'
 function App() {
   return (
     <Context>
@@ -35,8 +38,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/com" element={<Comments/>}/>
+          <Route path="/admin/users" element={<PageLayout title="Quản lý thành viên"><Members /></PageLayout>} />
           <Route element={<PrivateOutlet />}>
-            
+            <Route path="/admin/users" element={<PrivateRoute title="Quản lý thành viên"><Members /></PrivateRoute>} />
             <Route path="dashboard" element={<PrivateRoute title="dashboard"><Dashboard/></PrivateRoute>} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/projects" element={<PrivateRoute title="Dự án"><Project /></PrivateRoute>} />
