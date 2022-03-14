@@ -7,8 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 
-axios.defaults.baseURL = ' http://localhost:8000/';
-// axios.defaults.baseURL = ' http://localhost:8000//';
+axios.defaults.baseURL = ' https://qlvcbackend.herokuapp.com/';
+// axios.defaults.baseURL = ' https://qlvcbackend.herokuapp.com//';
 axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem('token');
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 

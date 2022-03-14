@@ -32,7 +32,7 @@ const AddTask = () => {
     console.log(e.target.value)
     console.log(e.target.name)
     if (e.target.name === 'projectCode') {
-      axios.get(` http://localhost:8000//api/members/${e.target.value}`, config).then(res=> {
+      axios.get(` https://qlvcbackend.herokuapp.com//api/members/${e.target.value}`, config).then(res=> {
         if (res.data.code === 200) {
             setMembers(res.data.data);
         }
@@ -82,7 +82,7 @@ const AddTask = () => {
     let pid = 0;
     if (parent_id) pid = parent_id;
     console.log(task)
-    axios.post(` http://localhost:8000//api/tasks/create/${pid}/projects/${project_id}`, task, config).then(res => {
+    axios.post(` https://qlvcbackend.herokuapp.com//api/tasks/create/${pid}/projects/${project_id}`, task, config).then(res => {
       console.log(res);
       if(res.data.code === 200)
       {
@@ -112,7 +112,7 @@ const AddTask = () => {
       }
           
     });
-    axios.get(` http://localhost:8000//api/members/${project_id}`, config).then(res=> {
+    axios.get(` https://qlvcbackend.herokuapp.com//api/members/${project_id}`, config).then(res=> {
         if (res.data.code === 200) {
             setMembers(res.data.data);
         }
@@ -122,7 +122,7 @@ const AddTask = () => {
         console.log(res.data.data);
       }
     )
-    axios.get(" http://localhost:8000//api/getAllProjects", config).then(res=> {
+    axios.get(" https://qlvcbackend.herokuapp.com//api/getAllProjects", config).then(res=> {
         if (res.data.code === 200) {
             setProjectNames(res.data.data);
             setLoading(false);

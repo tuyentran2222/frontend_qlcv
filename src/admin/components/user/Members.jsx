@@ -88,7 +88,7 @@ const Members = () => {
     };
 
     useEffect(() => {
-        console.log(`http://localhost:8000/api/users`);
+        console.log(`https://qlvcbackend.herokuapp.com/api/users`);
         axios.get(`/api/users`).then(res=> {
             console.log(res);
             if (res.data.code === 200) {
